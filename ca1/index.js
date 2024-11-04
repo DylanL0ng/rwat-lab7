@@ -1,6 +1,10 @@
 import { fromEvent } from "rxjs";
 import { buffer, debounceTime, filter, map } from "rxjs/operators";
 
+let currentNotification = undefined;
+let lastOutlinedElement = undefined;
+
+// Keyboard input management
 const keySequence = {
   add: "a",
   remove: "r",
@@ -17,10 +21,11 @@ const keySequence = {
   rotateAnticlockwise: ["ArrowRight", "ArrowUp", "ArrowLeft"],
 };
 
-let currentNotification = undefined;
 let selectedElement = { row: 0, col: 0 };
 
 const setKeybordMode = (bool) => {
+  // When keyboard movement is detected it will
+  // higlight the current selected grid element
   if (bool && !document.body.classList.contains("keyboard--mode"))
     document.body.classList.add("keyboard--mode");
   else if (!bool && document.body.classList.contains("keyboard--mode"))
@@ -28,22 +33,37 @@ const setKeybordMode = (bool) => {
 };
 
 const addRemoveObservable = fromEvent(document, "keydown").pipe(
+  // Fiters the keydown event to only accept
+  // either 'a' or 'r' input
   filter((e) => ["a", "r"].includes(e.key))
 );
 
 addRemoveObservable.subscribe((e) => {
+  // When 'a', or 'r' it will delete the current
+  // selected element of add an element depending
+  // on the key pressed
   setKeybordMode(true);
   if (e.key === keySequence.add) addElement();
   if (e.key === keySequence.remove) removeElement();
 });
 
 const arrowKeyObservable = fromEvent(document, "keydown").pipe(
+  // When arrows are inputed it will
+  // add the arrow to a buffer with a delay of 150ms,
+  // if more input is detected within this time frame
+  // it will add that to the buffer, if a sequence is
+  // detected from the keySequence object it will perform
+  // the given operation in arrowKeyObserable method.
   filter((e) => Object.values(keySequence).includes(e.key)),
   buffer(fromEvent(document, "keyup").pipe(debounceTime(150))),
   map((keys) => keys.map((e) => e.key))
 );
 
 arrowKeyObservable.subscribe((keys) => {
+  // If any sequence are detected it will
+  // enaable the keyboard mode, and depdending
+  // on the length of the sequence it will handle
+  // the operation accordingly
   setKeybordMode(true);
   if (keys.length === 1) {
     handleSingleKey(keys[0]);
@@ -55,6 +75,9 @@ arrowKeyObservable.subscribe((keys) => {
 });
 
 const handleSingleKey = (key) => {
+  // If the input is a single key, it will
+  // select the object depending on the given
+  // input
   switch (key) {
     case keySequence.selectUp:
       selectElement(selectedElement.row - 1, selectedElement.col);
@@ -75,6 +98,9 @@ const handleSingleKey = (key) => {
 };
 
 const handleMove = (keys) => {
+  // If the given sequence matches a valid
+  // movement sequence it will swap the two
+  // elements' positions
   if (arraysEqual(keys, keySequence.moveRight))
     moveElement(selectedElement.row, selectedElement.col, 0, 1);
   else if (arraysEqual(keys, keySequence.moveLeft))
@@ -86,6 +112,9 @@ const handleMove = (keys) => {
 };
 
 const handleRotate = (keys) => {
+  // If the given sequence matches a valid
+  // rotation sequence it will rotation the
+  // element
   if (arraysEqual(keys, keySequence.rotateClockwise))
     rotateElement(selectedElement.row, selectedElement.col, 90);
   else if (arraysEqual(keys, keySequence.rotateAnticlockwise))
@@ -93,6 +122,10 @@ const handleRotate = (keys) => {
 };
 
 const addElement = () => {
+  // This method finds the firt free cell in the grid
+  // and adds a box element to it, depending on if there
+  // is a valid free place available
+
   const { row, col } = findFirstFreeCell();
   if (row !== -1 && col !== -1) {
     GridMatrix.matrix.getGridInPos(row, col).addElement("box");
@@ -101,11 +134,14 @@ const addElement = () => {
 };
 
 const removeElement = () => {
+  // Removes the current selected element
   const { row, col } = selectedElement;
   triggerDeleteOnElement(row, col);
 };
 
 const selectElement = (row, col) => {
+  // If the row and column of the element are
+  // within bounds it will select the element
   if (
     row >= 0 &&
     row < GridMatrix.matrix.n &&
@@ -117,8 +153,9 @@ const selectElement = (row, col) => {
   }
 };
 
-let lastOutlinedElement = undefined;
 const triggerOutlineOnElement = (row, col) => {
+  // Add an outline to the given row and column
+  // element, if it is in keyobard mode
   if (lastOutlinedElement)
     lastOutlinedElement.classList.remove("keyboard--outlined");
 
@@ -128,11 +165,17 @@ const triggerOutlineOnElement = (row, col) => {
 };
 
 const openElementEditor = (row, col) => {
+  // Opens up the textarea input on a valid
+  // box element
   const element = GridMatrix.matrix.getElementInPos(row, col);
   if (element && element.type === "box") element.focus();
 };
 
 const moveElement = (row, col, rowOffset, colOffset) => {
+  // This method is used for swapping two elements
+  // it deletes the elements in the given positions
+  // and adds new ones with the same values in the new
+  // postion
   const targetRow = row + rowOffset;
   const targetCol = col + colOffset;
   if (
@@ -177,6 +220,8 @@ const moveElement = (row, col, rowOffset, colOffset) => {
 };
 
 const rotateElement = (row, col, angle) => {
+  // This method rotates an element by a given
+  // angle degree
   selectElement(row, col);
   const element = GridMatrix.matrix.getElementInPos(row, col);
   if (element) {
@@ -186,6 +231,8 @@ const rotateElement = (row, col, angle) => {
 };
 
 const findFirstFreeCell = () => {
+  // This method finds the first free cell in the
+  // grid and returns the row and col of it
   for (let r = 0; r < GridMatrix.matrix.n; r++) {
     for (let c = 0; c < GridMatrix.matrix.m; c++) {
       let element = GridMatrix.matrix.getGridInPos(r, c).element;
@@ -237,9 +284,6 @@ class GridMatrix {
         this.gridDOMElement.appendChild(gridPosElement);
         this.matrix[r][c] = new Grid(r, c, gridPosElement);
 
-        // check to see if we have a saved element
-        // creating errors related to savedPositions,
-        // check for errors there
         if (
           savedPositions &&
           savedPositions[r][c] &&
@@ -548,6 +592,8 @@ if (savedImages) {
 
 let initialised = false;
 const initialise = () => {
+  // Initialises the grid board, by utilsing templating
+  // and creating the DOM dynamically where needed
   if (initialised) return;
   const template = document
     .querySelector("#grid--board--template")
@@ -582,9 +628,6 @@ const initialise = () => {
     e.dataTransfer.setData("text/plain", e.target.dataset.type);
   });
 
-  // POSSIBLE REFINEMENTS
-  // I could also keep track of only the active elements
-  // to store less data.
   const saveGameBtnDOMElement = document.querySelector(".save--btn");
   saveGameBtnDOMElement.addEventListener("click", async (e) => {
     let images = JSON.parse(localStorage.getItem("images"));
