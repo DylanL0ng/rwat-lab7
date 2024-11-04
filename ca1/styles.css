@@ -240,11 +240,4 @@ textarea {
   outline: 1px solid;
 }
 
-@keyframes notification {
-  0% {
-    top: -100%;
-  }
-  100% {
-    top: 0;
-  }
-}
+@keyframes notifi

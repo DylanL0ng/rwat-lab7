@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>C21331063 - CA1</title>
+    <script type="module" crossorigin src="/assets/index-C3qhaOf5.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-HKJKwzSo.css">
+  </head>
+  <body>
+    <template id="notification--template">
+      <div class="notification">Warning: You cant do this</div>
+    </template>
+    <template id="label--image--prompt--template">
+      <form class="label--image--prompt prompt">
+        <p>Set a label</p>
+
+        <div class="input--group">
+          <label for="image--label">Label:</label>
+          <input type="text" id="image--label" />
+        </div>
+
+        <button type="submit">Set Label</button>
+      </form>
+    </template>
+    <template id="select--image--prompt--dropdown--template">
+      <form class="select--image--dropdown--prompt prompt">
+        <p>Select a previous image</p>
+
+        <select></select>
+
+        <button type="submit">Select Image</button>
+      </form>
+    </template>
+    <template id="select--image--prompt--template">
+      <div class="select--image--prompt prompt">
+        <p>Do you want to select a previous image?</p>
+
+        <div class="options">
+          <button type="submit" value="true">Yes</button>
+          <button type="submit" value="false">No, create a new one</button>
+        </div>
+      </div>
+    </template>
+    <template id="create--grid--prompt--template">
+      <form class="create--grid--prompt prompt">
+        <p>What dimensions would you like your grid?</p>
+        <div class="options">
+          <div class="input--group">
+            <label for="rows--count">Rows</label>
+            <input type="number" id="rows--count" step="1" value="1" min="1" />
+          </div>
+          <div class="input--group">
+            <label for="cols--count">Columns</label>
+            <input type="number" id="cols--count" step="1" value="1" min="1" />
+          </div>
+        </div>
+
+        <button type="submit">Create Board</button>
+      </form>
+    </template>
+    <template id="grid--board--template">
+      <div class="grid--board"></div>
+      <div class="container">
+        <div class="build--kit">
+          <p>Drag an Element onto the grid</p>
+          <div class="elements">
+            <div class="element element--arrow" data-type="arrow"></div>
+            <div class="element element--box" data-type="box">TEXT BOX</div>
+          </div>
+        </div>
+        <div class="save--game--container">
+          <p>Save Game</p>
+          <button class="save--btn"></button>
+        </div>
+      </div>
+    </template>
+  </body>
+</html>
