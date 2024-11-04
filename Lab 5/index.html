@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./index.js" type="module"></script>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <nav>
+        <div class="left--side">
+          <button class="create--person--btn">Create Person</button>
+          <button class="list--people--btn">List People</button>
+        </div>
+        <div class="right--side">
+          <button class="auth--btn">Logout</button>
+        </div>
+      </nav>
+      <main>
+        <section class="create--user--section">
+          <div class="prompt--message">
+            The person has been added successfully.
+          </div>
+          <form id="create--user--form" action="">
+            <div class="input--group" id="">
+              <label for="id--input">ID:</label>
+              <input type="text" id="id--input" />
+            </div>
+            <div class="input--group">
+              <label for="name--input">Name:</label>
+              <input type="text" id="name--input" />
+            </div>
+
+            <button type="submit">Submit</button>
+          </form>
+        </section>
+        <section class="list--people--section">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </section>
+      </main>
+    </div>
+    <div class="firebase--auth--wrapper"></div>
+  </body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lab 2 - C21331063</title>
+
+    <link rel="stylesheet" href="./style.css" />
+    <script src="./index.js" defer></script>
+  </head>
+  <body>
+    <dialog id="dialog--new--game">
+      <h2>Would you like to start a new game or load last save?</h2>
+      <button class="new--game--btn">Start New Game</button>
+      <button class="load--game--btn">Load Game</button>
+    </dialog>
+    <dialog id="dialog--select--difficulty">
+      <h2>How many tiles would like you scrambled?</h2>
+      <p>Scramble: 1</p>
+      <input type="range" max="6" min="1" step="1" />
+      <button>Scramble board</button>
+    </dialog>
+
+    <div class="container">
+      <div class="puzzle--board">
+        <div class="puzzle--piece"></div>
+        <div class="puzzle--piece"></div>
+        <div class="puzzle--piece"></div>
+        <div class="puzzle--piece"></div>
+        <div class="puzzle--piece"></div>
+        <div class="puzzle--piece"></div>
+        <div class="puzzle--piece"></div>
+        <div class="puzzle--piece"></div>
+        <div class="puzzle--piece"></div>
+      </div>
+    </div>
+    <button class="save--game--btn">Save Game</button>
+  </body>
+</html>

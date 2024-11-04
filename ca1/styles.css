@@ -1,0 +1,243 @@
+/* Variables */
+:root {
+  --color-background: #0f172a;
+  --color-grid-background: #1e293b;
+  --color-element-background: #334155;
+  --color-textarea-background: #475569;
+  --color-text: #f8fafc;
+  --color-grid-border: #020617;
+
+  --font-family: Arial, Helvetica, sans-serif;
+  --font-weight-bold: bold;
+
+  --grid-gap: 2px;
+  --grid-size: 60vh;
+
+  --element-size: 100px;
+  --element-padding: calc(100% - 30px);
+}
+
+/* Global Styles */
+*,
+*::before,
+*::after {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  color: var(--color-text);
+  font-family: var(--font-family);
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: var(--color-background);
+}
+
+/* Grid Section */
+.grid--board {
+  width: var(--grid-size);
+  aspect-ratio: 1 / 1;
+  display: grid;
+  gap: var(--grid-gap);
+  background-color: var(--color-grid-border);
+  border: 2px solid var(--color-grid-border);
+}
+
+.grid--pos {
+  background-color: var(--color-grid-background);
+  position: relative;
+}
+
+.grid--pos > .grid--element {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+}
+
+.grid--element > div {
+  background-color: var(--color-element-background);
+  width: var(--element-padding);
+  height: var(--element-padding);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Arrow Element */
+.grid--pos > .grid--arrow--element > div,
+.element--arrow {
+  background-image: url("./assets/arrow.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 80%;
+}
+
+/* Box Element */
+.grid--pos > .grid--box--element.focused textarea,
+.grid--pos > .grid--box--element:not(.focused) p {
+  display: block;
+}
+
+.grid--pos > .grid--box--element:not(.focused) textarea,
+.grid--pos > .grid--box--element.focused p {
+  display: none;
+}
+
+textarea {
+  resize: none;
+  outline: 0;
+  text-align: center;
+  background-color: var(--color-textarea-background);
+}
+
+/* Container Section */
+.container {
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  align-items: center;
+  margin-top: 14px;
+}
+
+.container p {
+  margin-bottom: 14px;
+  font-weight: var(--font-weight-bold);
+  text-align: center;
+}
+
+/* Build Kit Section */
+.build--kit .elements {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.build--kit .element,
+.save--btn {
+  width: var(--element-size);
+  aspect-ratio: 1 / 1;
+  background-color: var(--color-grid-background);
+}
+
+/* Save Button */
+.save--btn {
+  outline: 0;
+  border: 0;
+  cursor: pointer;
+  background-image: url("./assets/save.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 60%;
+}
+
+/* Specific Element Styles */
+.element--box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-weight: var(--font-weight-bold);
+}
+
+/* Prompts */
+.prompt {
+  background-color: #1e293b;
+  padding: 10px 20px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
+
+.prompt--backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+  position: absolute;
+
+  inset: 0;
+  z-index: 1;
+}
+.prompt p {
+  opacity: 0.8;
+  margin-block: 10px;
+  text-align: center;
+}
+.prompt label {
+  text-align: center;
+}
+.prompt input {
+  text-align: center;
+  margin-top: 4px;
+}
+.prompt .input--group {
+  display: flex;
+  flex-direction: column;
+}
+.prompt .options {
+  display: flex;
+  gap: 10px;
+}
+
+.prompt button {
+  outline: 0;
+  border: 0;
+  width: 100%;
+  cursor: pointer;
+  padding: 10px 20px;
+}
+.prompt input {
+  background-color: #334155;
+  outline: 0;
+  border: 0;
+  padding-block: 8px;
+  padding-inline: 4px;
+}
+
+.select--image--prompt button {
+  background-color: #334155;
+  width: 100%;
+}
+.create--grid--prompt button,
+.select--image--dropdown--prompt button,
+.label--image--prompt button {
+  background-color: #10b981;
+  margin-top: 10px;
+}
+.select--image--dropdown--prompt select {
+  width: 100%;
+  background-color: #334155;
+  padding-block: 10px;
+  border: #1e293b;
+}
+
+.notification {
+  min-width: 30vw;
+  text-align: center;
+  background: rgba(239, 68, 68, 0.4);
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  padding: 14px 24px;
+
+  z-index: 3;
+
+  animation: forwards notification 750ms ease-in;
+}
+.notification.success {
+  background-color: rgba(22, 163, 74, 0.4);
+}
+
+.keyboard--mode .keyboard--outlined {
+  outline: 1px solid;
+}
+
+@keyframes notifi

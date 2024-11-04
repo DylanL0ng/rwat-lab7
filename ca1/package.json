@@ -1,0 +1,16 @@
+{
+  "name": "ca1",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "npx vite",
+    "build": "npx vite build"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "rxjs": "^7.8.1",
+    "vite": "^5.4.9"
+  }
+}
