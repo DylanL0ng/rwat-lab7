@@ -1,12 +1,12 @@
 import { Component, inject } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { HousingLocationComponent } from "../housing-location/housing-location.component";
-import { HousingLocation } from "../housinglocation";
-import { HousingService } from "../housing.service";
+import { ItemListing } from "../item-listing";
+import { ItemService } from "../item.service";
+import { ItemListingComponent } from "../item-listing/item-listing";
 @Component({
   selector: "app-home",
   standalone: true,
-  imports: [CommonModule, HousingLocationComponent],
+  imports: [CommonModule, ItemListingComponent],
   template: `
     <section>
       <form>
@@ -21,23 +21,23 @@ import { HousingService } from "../housing.service";
       </form>
     </section>
     <section class="results">
-      <app-housing-location
-        *ngFor="let housingLocation of filteredLocationList"
-        [housingLocation]="housingLocation"
-      ></app-housing-location>
+      <app-item-listing
+        *ngFor="let itemListing of filteredLocationList"
+        [itemListing]="itemListing"
+      ></app-item-listing>
     </section>
   `,
   styleUrls: ["./home.component.css"],
 })
 export class HomeComponent {
-  housingLocationList: HousingLocation[] = [];
-  housingService: HousingService = inject(HousingService);
-  filteredLocationList: HousingLocation[] = [];
+  housingLocationList: ItemListing[] = [];
+  itemService: ItemService = inject(ItemService);
+  filteredLocationList: ItemListing[] = [];
 
   constructor() {
-    this.housingService
-      .getAllHousingLocations()
-      .then((housingLocationList: HousingLocation[]) => {
+    this.itemService
+      .getAllItems()
+      .then((housingLocationList: ItemListing[]) => {
         this.housingLocationList = housingLocationList;
         this.filteredLocationList = housingLocationList;
       });
@@ -47,9 +47,8 @@ export class HomeComponent {
       this.filteredLocationList = this.housingLocationList;
       return;
     }
-    this.filteredLocationList = this.housingLocationList.filter(
-      (housingLocation) =>
-        housingLocation?.city.toLowerCase().includes(text.toLowerCase())
+    this.filteredLocationList = this.housingLocationList.filter((itemListing) =>
+      itemListing?.city.toLowerCase().includes(text.toLowerCase())
     );
   }
 }

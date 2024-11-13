@@ -1,10 +1,10 @@
 import { Component, inject } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { ActivatedRoute } from "@angular/router";
-import { HousingService } from "../housing.service";
-import { HousingLocation } from "../housinglocation";
 
 import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
+import { ItemListing } from "../item-listing";
+import { ItemService } from "../item.service";
 
 @Component({
   selector: "app-details",
@@ -14,25 +14,19 @@ import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
     <article>
       <img
         class="listing-photo"
-        [src]="housingLocation?.photo"
-        alt="Exterior photo of {{ housingLocation?.name }}"
+        [src]="itemListing?.photo"
+        alt="Photo of {{ itemListing?.name }}"
         crossorigin
       />
       <section class="listing-description">
-        <h2 class="listing-heading">{{ housingLocation?.name }}</h2>
-        <p class="listing-location">
-          {{ housingLocation?.city }}, {{ housingLocation?.state }}
+        <p>€{{ itemListing?.price }}</p>
+        <p>
+          {{ itemListing?.description }}
         </p>
-      </section>
-      <section class="listing-features">
-        <h2 class="section-heading">About this housing location</h2>
-        <ul>
-          <li>Units available: {{ housingLocation?.availableUnits }}</li>
-          <li>Does this location have wifi: {{ housingLocation?.wifi }}</li>
-          <li>
-            Does this location have laundry: {{ housingLocation?.laundry }}
-          </li>
-        </ul>
+        <h2 class="listing-heading">{{ itemListing?.name }}</h2>
+        <p class="listing-location">
+          {{ itemListing?.city }}, {{ itemListing?.state }}
+        </p>
       </section>
       <section class="listing-apply">
         <h2 class="section-heading">Apply now to live here</h2>
@@ -52,8 +46,8 @@ import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
 })
 export class DetailsComponent {
   route: ActivatedRoute = inject(ActivatedRoute);
-  housingService = inject(HousingService);
-  housingLocation: HousingLocation | undefined;
+  itemService = inject(ItemService);
+  itemListing: ItemListing | undefined;
 
   applyForm = new FormGroup({
     firstName: new FormControl(""),
@@ -62,16 +56,14 @@ export class DetailsComponent {
   });
 
   constructor() {
-    const housingLocationId = parseInt(this.route.snapshot.params["id"], 10);
-    this.housingService
-      .getHousingLocationById(housingLocationId)
-      .then((housingLocation) => {
-        this.housingLocation = housingLocation;
-      });
+    const itemListingId = parseInt(this.route.snapshot.params["id"], 10);
+    this.itemService.getItemById(itemListingId).then((itemListing) => {
+      this.itemListing = itemListing;
+    });
   }
 
   submitApplication() {
-    this.housingService.submitApplication(
+    this.itemService.submitApplication(
       this.applyForm.value.firstName ?? "",
       this.applyForm.value.lastName ?? "",
       this.applyForm.value.email ?? ""

@@ -1,22 +1,19 @@
 import { Injectable } from "@angular/core";
-import { HousingLocation } from "./housinglocation";
+import { ItemListing } from "./item-listing";
 @Injectable({
   providedIn: "root",
 })
-export class HousingService {
-  url = "http://localhost:3000/locations";
-  async getAllHousingLocations(): Promise<HousingLocation[]> {
+export class ItemService {
+  url = "http://localhost:3000/items";
+  async getAllItems(): Promise<ItemListing[]> {
     const data = await fetch(this.url);
     return (await data.json()) ?? [];
   }
-  async getHousingLocationById(
-    id: number
-  ): Promise<HousingLocation | undefined> {
+  async getItemById(id: number): Promise<ItemListing | undefined> {
     const data = await fetch(`${this.url}/${id}`);
     return (await data.json()) ?? {};
   }
   submitApplication(firstName: string, lastName: string, email: string) {
-    // tslint:disable-next-line
     console.log(firstName, lastName, email);
   }
 }
