@@ -1,7 +1,7 @@
 import { Component, Input } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { ItemListing } from "../item-listing";
 import { RouterModule } from "@angular/router";
+import { ItemListing } from "../item-listing";
 
 @Component({
   selector: "app-item-listing",
@@ -16,9 +16,7 @@ import { RouterModule } from "@angular/router";
         crossorigin
       />
       <h2 class="listing-heading">{{ itemListing.name }}</h2>
-      <p class="listing-price">
-        {{ itemListing.price }}
-      </p>
+      <p class="listing-price">€{{ itemListing.price }}</p>
       <p class="listing-location">
         {{ itemListing.city }}, {{ itemListing.state }}
       </p>

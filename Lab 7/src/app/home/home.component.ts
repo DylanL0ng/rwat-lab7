@@ -2,7 +2,7 @@ import { Component, inject } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { ItemListing } from "../item-listing";
 import { ItemService } from "../item.service";
-import { ItemListingComponent } from "../item-listing/item-listing";
+import { ItemListingComponent } from "../item-listing/item-listing.component";
 @Component({
   selector: "app-home",
   standalone: true,
