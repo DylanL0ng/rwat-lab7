@@ -19,17 +19,17 @@ import { ItemService } from "../item.service";
         crossorigin
       />
       <section class="listing-description">
+        <h2 class="listing-heading">{{ itemListing?.name }}</h2>
         <p>€{{ itemListing?.price }}</p>
         <p>
           {{ itemListing?.description }}
         </p>
-        <h2 class="listing-heading">{{ itemListing?.name }}</h2>
         <p class="listing-location">
           {{ itemListing?.city }}, {{ itemListing?.state }}
         </p>
       </section>
       <section class="listing-apply">
-        <h2 class="section-heading">Apply now to live here</h2>
+        <h2 class="section-heading">Request the Item</h2>
         <form [formGroup]="applyForm" (submit)="submitApplication()">
           <label for="first-name">First Name</label>
           <input id="first-name" type="text" formControlName="firstName" />
@@ -37,7 +37,7 @@ import { ItemService } from "../item.service";
           <input id="last-name" type="text" formControlName="lastName" />
           <label for="email">Email</label>
           <input id="email" type="email" formControlName="email" />
-          <button type="submit" class="primary">Apply now</button>
+          <button type="submit" class="primary">Request</button>
         </form>
       </section>
     </article>

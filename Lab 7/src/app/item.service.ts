@@ -120,8 +120,8 @@ export class ItemService {
     ];
   }
   async getItemById(id: number): Promise<ItemListing | undefined> {
-    const data = await fetch(`${this.url}/${id}`);
-    return (await data.json()) ?? {};
+    const data = (await this.getAllItems()).filter((x) => x.id === id)[0];
+    return data;
   }
   submitApplication(firstName: string, lastName: string, email: string) {
     console.log(firstName, lastName, email);
